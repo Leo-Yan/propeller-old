@@ -135,6 +135,7 @@ static int ilm_insert_drive_multi_paths(struct ilm_lock *lock,
 
 	for (i = 0; i < lock->good_drive_num; i++) {
 		drive = &lock->drive[i];
+		drive->index = i;
 		uuid_unparse(drive->uuid, uuid_str);
 		uuid_str[36] = '\0';
 		ilm_log_dbg("Drive %d UUID: %s", i, uuid_str);

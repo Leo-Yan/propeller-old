@@ -1035,9 +1035,11 @@ static void idm_raid_multi_issue(struct ilm_lock *lock, char *host_id,
 		drive = req->drive;
 		if (req->result == -EIO &&
 			(req->path_idx < drive->path_num -1)) {
+			ilm_log_dbg("%s: I/O failure path=%s", __func__, req->path);
+
 			req->path_idx++;
 			req->path = drive->path[req->path_idx];
-			ilm_log_dbg("%s: I/O failure path_idx=%d path=%s",
+			ilm_log_dbg("%s: New path selection: idx=%d path=%s",
 				    __func__, req->path_idx, req->path);
 			goto send_next_request;
 		}
