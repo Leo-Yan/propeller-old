@@ -8,6 +8,13 @@ TARGET = seagate_ilm
 HEADER_TARGET = ilm.h
 LIB_TARGET = libseagate_ilm
 
+VER := $(shell cat ../VERSION)
+ifeq ($(shell git rev-parse --is-inside-work-tree >/dev/null),)
+	VER := "$(shell git describe --abbrev=12 --dirty --always --tags)"
+endif
+
+CFLAGS += -DVERSION=\"$(VER)\"
+
 SOMAJOR=0
 SOMINOR=1
 

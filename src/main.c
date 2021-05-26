@@ -17,6 +17,7 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/utsname.h>
 #include <uuid/uuid.h>
 #include <unistd.h>
 
@@ -111,6 +112,7 @@ static int ilm_daemon_setup(void)
 	struct sched_param sched_param;
 	int max_prio;
 #endif
+	struct utsname nodename;
 	int ret;
 
 	if (!env.debug && daemon(0, 0) < 0) {
@@ -147,7 +149,9 @@ static int ilm_daemon_setup(void)
 		return -1;
 	}
 #endif
-
+	uname(&nodename);
+	ilm_log_warn("IDM lock manager: version %s on host %s",
+		     VERSION, nodename.nodename);
 	return 0;
 }
 
